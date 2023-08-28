@@ -1,19 +1,22 @@
-import React, { Component, Fragment } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './component/layout/Navbar';
-import './App.css';
-import axios from 'axios';
-import Users from './component/users/Users';
-import Search from './component/users/Search';
-import Alert from './component/layout/Alert';
-import About from './component/pages/About';
+import React, { Component, Fragment } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./component/layout/Navbar";
+import "./App.css";
+import axios from "axios";
+import Users from "./component/users/Users";
+import Search from "./component/users/Search";
+import Alert from "./component/layout/Alert";
+import About from "./component/pages/About";
 
 class App extends Component {
-  state = {
-    users: [],
-    loading: false,
-    alert: null,
-  };
+  constructor() {
+    super();
+    this.state = {
+      users: [],
+      loading: false,
+      alert: null,
+    };
+  }
 
   // Clear Github Users
   clearUsers = () => {
@@ -36,33 +39,30 @@ class App extends Component {
   render() {
     const { users, loading } = this.state;
     return (
-      <Router>
-        <div className='App'>
-          <Navbar />
-          <div className='container'>
-            <Alert alert={this.state.alert} />
-            <Routes>
-              <Route
-                exact
-                path='/'
-                element={<App />}
-                render={(props) => (
-                  <Fragment>
-                    <Search
-                      searchUsers={this.searchUsers}
-                      clearUsers={this.clearUsers}
-                      showClear={users.length > 0 ? true : false}
-                      setAlert={this.setAlert}
-                    />
-                    <Users loading={loading} users={users} />
-                  </Fragment>
-                )}
-              />
-              <Route exact path='/about' element={<About />} />
-            </Routes>
-          </div>
+      <div className="App">
+        <Navbar />
+        <div className="container">
+          <Alert alert={this.state.alert} />
+          <Routes>
+            <Route
+              exact
+              path="/"
+              element={
+                <Fragment>
+                  <Search
+                    searchUsers={this.searchUsers}
+                    clearUsers={this.clearUsers}
+                    showClear={users.length > 0 ? true : false}
+                    setAlert={this.setAlert}
+                  />
+                  <Users loading={loading} users={users} />
+                </Fragment>
+              }
+            />
+            <Route exact path="/about" element={<About />} />
+          </Routes>
         </div>
-      </Router>
+      </div>
     );
   }
 }
